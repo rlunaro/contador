@@ -2,11 +2,8 @@
 /**
   * crear.php 
   */
-// configuration goes here
-$servername = "localhost";
-$database = "contador";
-$username = "contador"; 
-$password = "Voltaren75mg";
+require 'config.php';
+require 'common.php';
 
 // next step: get parameters
 $destination_url = $_POST["destination_url"];
@@ -23,41 +20,6 @@ if( !$conn->connect_error ) {
     }
   } 
   $conn->close();
-}
-
-
-function url_is_registered( $conn, $destination_url ) {
-
-    $sql = "select destination_url 
-            from total_visits 
-            where destination_url = '#destination_url#'";
-    $sql = str_replace( "#destination_url#",
-            mysqli_real_escape_string($conn, $destination_url), 
-            $sql );
-    $rs = $conn->query( $sql );
-    if( $rs ) {
-      $row = $rs->fetch_assoc(); 
-      if( $row ) 
-        return true; 
-      else
-        return false;
-    }else
-      return false; 
-}
-
-function register_url( $conn, $destination_url ) {
-
-  $sql = "insert into total_visits 
-        (destination_url, 
-         totalvisits)
-        values
-        ('#dest#', 
-        0 )";
-  $sql = str_replace( "#dest#", 
-                mysqli_real_escape_string( $conn, $destination_url ), 
-                $sql ); 
-  $rs = $conn->query( $sql ); 
-  return $rs;
 }
 
 

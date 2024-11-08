@@ -2,11 +2,9 @@
 /**
   * visitas.php 
   */
-// configuration goes here
-$servername = "localhost"; 
-$username = "contador"; 
-$password = "Voltaren75mg";
-$database = "contador";
+require 'config.php';
+require 'common.php';
+
 $header_content = "Location: #dest#";
 
 // next step: get parameters
@@ -20,28 +18,6 @@ if( !$conn->connect_error ) {
   else
     $detailed_visits = get_detailed_visits( $conn, $destination_url ); 
 }
-
-
-function get_total_visits( $conn ) {
-    $sql = "select destination_url, 
-            totalvisits 
-            from total_visits"; 
-    return $conn->query( $sql ); 
-}
-
-
-function get_detailed_visits( $conn, $destination_url ) {
-  $sql = "select date( access_date ) day, 
-                 count(*) total 
-            from visits
-           where destination_url = '#dest#'
-           group by date( access_date )"; 
-  $sql = str_replace( "#dest#", 
-            mysqli_real_escape_string( $conn, $destination_url ), 
-            $sql ); 
-  return $conn->query( $sql );
-}
-
 
 
 ?>
